@@ -29,6 +29,8 @@ same as default prompt with `$additional` variable at the end to modify it at ru
 
 ### git_status
 
+![example of prompt](imgs/prompt.png)
+
 the method check if the directory is a git repo and if has a remote. if both are true:
 
 - [x] retrieves info
