@@ -3,7 +3,7 @@
 git_status() {
     # Check if in a Git repository
     if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-        echo "!git"
+        echo " !git"
         return
     fi
 
@@ -12,7 +12,7 @@ git_status() {
 
     # Check if there is an upstream remote
     if ! git rev-parse --abbrev-ref --symbolic-full-name @{upstream} >/dev/null 2>&1; then
-        echo "!remote"
+        echo " !remote"
         return
     fi
 
@@ -52,7 +52,7 @@ git_status() {
 
     # Determine if everything is fine
     if [[ $ahead == 0 && $behind == 0 && $unmerged == 0 && $unstaged == 0 && $modified == 0 && $untracked == 0 ]]; then
-        exit_status="%B%{$fg[green]%}git ok%{$reset_color%}"
+        exit_status="%B%{$fg[green]%} git ok%{$reset_color%}"
     else
         exit_status="$repo_id_info | $repo_changes_info"
     fi
@@ -62,7 +62,7 @@ git_status() {
 
 build_prompt() {
     additional=$(git_status)
-    echo "%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]$additional%{$reset_color%}$%b "
+    echo "%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]$additional %{$reset_color%}$%b "
 }
 
 build_prompt
