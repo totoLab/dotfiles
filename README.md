@@ -16,3 +16,9 @@ aliased `rm -i` as fallback when other "removal protection" aliases are defined.
 - history
 - auto cd
 - auto completion with tab
+
+## .zsh_aliases
+
+- `rm` uses is redefined to use `trash` instead
+
+other options are just shortcuts.
