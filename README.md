@@ -22,3 +22,16 @@ aliased `rm -i` as fallback when other "removal protection" aliases are defined.
 - `rm` uses is redefined to use `trash` instead
 
 other options are just shortcuts.
+
+## .shell_prompt
+
+same as default prompt with `$additional` variable at the end to modify it at runtime
+
+### git_status
+
+the method check if the directory is a git repo and if has a remote. if both are true:
+
+- [x] retrieves info
+- [x] styles with colors
+- [ ] changes colors based on value
+- [x] constructs the exit_status string

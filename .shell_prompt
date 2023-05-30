@@ -1,0 +1,68 @@
+# custom shell prompt with git
+
+git_status() {
+    # Check if in a Git repository
+    if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        echo "!git"
+        return
+    fi
+
+    # Get Git repository name
+    local repo_name=$(basename "$(git rev-parse --show-toplevel)")
+
+    # Check if there is an upstream remote
+    if ! git rev-parse --abbrev-ref --symbolic-full-name @{upstream} >/dev/null 2>&1; then
+        echo "!remote"
+        return
+    fi
+
+    # Get remote status (ahead/behind)
+    local remote_status=$(git rev-list --left-right --count @{upstream}...HEAD 2>/dev/null)
+    local ahead=$(echo "$remote_status" | awk '{print $1}')
+    local behind=$(echo "$remote_status" | awk '{print $2}')
+
+    # Get local status (unmerged, unstaged, modified, untracked)
+    local unmerged=$(git ls-files --unmerged | wc -l)
+    local unstaged=$(git diff --shortstat | wc -l)
+    local modified=$(git ls-files --modified | wc -l)
+    local untracked=$(git ls-files --others --exclude-standard | wc -l)
+
+    # Styling
+    local left_bracket="%B%{$fg[red]%}["
+    local right_bracket="%B%{$fg[red]%}]"
+    local repo_name_s="%{$fg[yellow]%}${repo_name}"
+    local at="%{$fg[green]%}@"
+    local branch="%{$fg[blue]%}$(git rev-parse --abbrev-ref HEAD)"
+    local repo_info="$left_bracket$repo_name_s$at$branch$right_bracket%{$reset_color%}"
+    local ahead_info="%B%{$fg[green]%}\xE2\x86\x91$ahead%{$reset_color%}"
+    local behind_info="%B%{$fg[red]%}\xE2\x86\x93$behind%{$reset_color%}"
+
+    local repo_id_info=$repo_info$ahead_info$behind_info
+
+    # TODO add if statement to change color based on value
+    local unmerged_info="%B%{$fg[magenta]%}U:$unmerged%{$reset_color%}"
+    local unstaged_info="%B%{$fg[magenta]%}S:$unstaged%{$reset_color%}"
+    local modified_info="%B%{$fg[magenta]%}M:$modified%{$reset_color%}"
+    local untracked_info="%B%{$fg[magenta]%}T:$untracked%{$reset_color%}"
+
+    local repo_changes_info="$unmerged_info $unstaged_info $modified_info $untracked_info"
+
+    # default
+    local exit_status="empty"
+
+    # Determine if everything is fine
+    if [[ $ahead == 0 && $behind == 0 && $unmerged == 0 && $unstaged == 0 && $modified == 0 && $untracked == 0 ]]; then
+        exit_status="%B%{$fg[green]%}git ok%{$reset_color%}"
+    else
+        exit_status="$repo_id_info | $repo_changes_info"
+    fi
+
+    echo "$exit_status"
+}
+
+build_prompt() {
+    additional=$(git_status)
+    echo "%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]$additional%{$reset_color%}$%b "
+}
+
+build_prompt
