@@ -1,4 +1,4 @@
 alias qrscan="flatpak run vn.hoabinh.quan.CoBang"
 alias open="xdg-open"
 alias rm="trash"
-alias pip-upgrade-all="pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
+# alias pip-upgrade-all="pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
