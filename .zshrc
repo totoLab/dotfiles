@@ -13,7 +13,11 @@ update_prompt() {
         PROMPT=$(. ~/.config/zsh/.shell_prompt)
     else
         # fallback prompt
+<<<<<<< HEAD
         PROMPT="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%(4~|%-1~/…/%2~|%3~)%{$fg[red]%}]%{$reset_color%}$%b "
+=======
+	PROMPT="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
+>>>>>>> 102647a (merging)
     fi
 }
 
@@ -40,7 +44,8 @@ compinit
 _comp_options+=(globdots)		# Include hidden files.
 
 # PATH
-PATH=$PATH:~/scripts/
+scripts_path="$HOME/scripts/"
+PATH=$PATH$( find $scripts_path -type d -not -path "*/.sync/*" -printf ":%p" )
 
 alias rm="rm -i"
 # Aliases
@@ -48,5 +53,15 @@ if [ -f ~/.config/zsh/.zsh_aliases ]; then
     . ~/.config/zsh/.zsh_aliases
 fi
 
+auto_completion_path="~/.config/zsh/.zsh-completions"
+if [ -d $auto_completion_path ]; then
+    fpath=($auto_completion_path $fpath)
+fi
+
+
 # Load syntax highlighting; should be last.
 source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
