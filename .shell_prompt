@@ -62,7 +62,7 @@ git_status() {
 
 build_prompt() {
     additional=$(git_status)
-    echo "%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]$additional %{$reset_color%}$%b "
+    echo "%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%(4~|%-1~/…/%2~|%3~)%{$fg[red]%}]$additional %{$reset_color%}$%b "
 }
 
 build_prompt
