@@ -5,3 +5,4 @@ alias rm="trash"
 alias nonet="firejail --net=none"
 alias refresh="cd ."
 alias spotifycli="spotify_player"
+alias ls='ls --color'
