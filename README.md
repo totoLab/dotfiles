@@ -1,4 +1,8 @@
 # personal dotfiles
+Requires:
+```
+git trash-cli zsh-syntax-highlighting
+```
 
 ## .zshrc
 

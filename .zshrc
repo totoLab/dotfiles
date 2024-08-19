@@ -45,7 +45,9 @@ _comp_options+=(globdots)		# Include hidden files.
 scripts_path="$HOME/scripts/"
 PATH=$PATH$( find $scripts_path -type d -not -path "*/.sync/*" -printf ":%p" )
 
-alias rm="rm -i"
+if command -v trash &> /dev/null; then
+    alias rm="rm -i"
+fi
 # Aliases
 if [ -f ~/.config/zsh/.zsh_aliases ]; then
     . ~/.config/zsh/.zsh_aliases
