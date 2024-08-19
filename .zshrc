@@ -10,7 +10,9 @@ setopt prompt_subst
 # Define a function to update the prompt
 update_prompt() {
     if [ -f ~/.config/zsh/.shell_prompt ]; then
-        PROMPT=$(. ~/.config/zsh/.shell_prompt)
+        if command -v git &> /dev/null; then
+            PROMPT=$(. ~/.config/zsh/.shell_prompt)
+        fi
     else
         # fallback prompt
 	PROMPT="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%(5~|%-2~/…/%2~|%3~)%{$fg[red]%}]%{$reset_color%}$%b "
