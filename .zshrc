@@ -61,5 +61,3 @@ fi
 source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
 
 
-# Load Angular CLI autocompletion.
-source <(ng completion script)
