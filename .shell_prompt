@@ -18,8 +18,8 @@ git_status() {
 
     # Get remote status (ahead/behind)
     local remote_status=$(git rev-list --left-right --count @{upstream}...HEAD 2>/dev/null)
-    local ahead=$(echo "$remote_status" | awk '{print $1}')
-    local behind=$(echo "$remote_status" | awk '{print $2}')
+    local behind=$(echo "$remote_status" | awk '{print $1}')
+    local ahead=$(echo "$remote_status" | awk '{print $2}')
 
     # Get local status (unmerged, unstaged, modified, untracked)
     local unmerged=$(git ls-files --unmerged | wc -l)
